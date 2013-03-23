@@ -12,7 +12,7 @@ class GitPush extends BaseTask
     {
         $branch = system('git rev-parse --abbrev-ref HEAD');
         $remotes = array('origin');
-        if ( in_array('all',$this->options->remote) ) {
+        if ( $this->options->remote && in_array('all',$this->options->remote) ) {
             $remotes = explode("\n",trim(shell_exec('git remote')));
         } elseif ( $this->options->remote ) {
             $remotes = $this->options->remote;
