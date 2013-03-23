@@ -5,17 +5,45 @@ use RuntimeException;
 
 class Console extends Application
 {
-    public function init()
-    {
-        parent::init();
-        $this->registerCommand('bump');
-        $this->registerCommand('tag');
-        $this->registerCommand('release');
-    }
+    const NAME = "PHPRelease";
+    const VERSION = "0.0.1";
+
+    public $config;
 
     public function options($opts)
     {
+        parent::options($opts);
         $opts->add('dry','dryrun mode.');
+        foreach( $this->getTaskObjects() as $task ) {
+            $task->options($opts);
+        }
+    }
+
+    public function getTaskObjects()
+    {
+        $tasks = array();
+        $steps = $this->getSteps();
+        foreach( $steps as $step ) {
+            if ( file_exists($step) ) {
+                continue;
+            }
+
+            $task = null;
+            if ( class_exists( $step, true ) ) {
+                $task = new $step( $this->logger, $this->getConfig() );
+            } else {
+                // built-in task
+                $taskClass = 'PHPRelease\\Tasks\\' . $step;
+                if ( class_exists($taskClass, true ) ) {
+                    $task = new $taskClass( $this->logger , $this->getConfig() );
+                }
+            }
+            if ( ! $task ) {
+                throw new Exception("Task $step not found.");
+            }
+            $tasks[] = $task;
+        }
+        return $tasks;
     }
 
     public function runSteps($steps, $dryrun = false)
@@ -33,17 +61,18 @@ class Console extends Application
                         $this->logger->error("===> $step failed, aborting...");
                         exit(0);
                     }
+                    continue;
                 }
             }
 
             $task = null;
             if ( class_exists( $step, true ) ) {
-                $task = new $step( $this->logger );
+                $task = new $step( $this->logger , $this->getConfig(), $this->options );
             } else {
                 // built-in task
                 $taskClass = 'PHPRelease\\Tasks\\' . $step;
                 if ( class_exists($taskClass, true ) ) {
-                    $task = new $step( $this->logger );
+                    $task = new $taskClass( $this->logger , $this->getConfig() , $this->options );
                 }
             }
             if ( ! $task ) {
@@ -62,9 +91,26 @@ class Console extends Application
         }
     }
 
+
+    public function getSteps()
+    {
+        $config = $this->getConfig();
+        return preg_split('#\s*,\s*#', $config['Steps'] );
+    }
+
+    public function getConfig()
+    {
+        if ( $this->config ) {
+            return $this->config;
+        }
+        $config = parse_ini_file('phprelease.ini');
+        return $this->config = $config;
+    }
+
+
     public function execute()
     {
-        $config = parse_ini_file('phprelease.ini');
+        $config = $this->getConfig();
         if ( isset($config['autoload']) ) {
             if ( $a = $config['autoload'] ) {
                 $this->logger->info("===> Found autoload script, loading...");
@@ -76,7 +122,8 @@ class Console extends Application
             $loader = require "vendor/autoload.php";
         }
 
-        $steps = preg_split('#\s*,\s*#',$config['steps'] );
+
+        $steps = $this->getSteps();
         $this->runSteps($steps, $this->options->dryrun);
     }
 }
