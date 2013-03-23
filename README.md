@@ -35,7 +35,7 @@ Steps = BumpVersion, scripts/compile, GitTag
 Each task has its own options, run help command, you should see the options from these tasks:
 
     $ phprelease help
-    PHPRelease
+    PHPRelease - The Fast PHP Release Manager
 
     Usage
         phprelease [options] [command] [argument1 argument2...]
