@@ -1,6 +1,7 @@
 <?php
 namespace PHPRelease;
 use CLIFramework\Application;
+use Exception;
 use RuntimeException;
 use PHPRelease\VersionReader;
 
@@ -63,7 +64,7 @@ class Console extends Application
 
             $taskClass = $this->findTaskClass($step);
             if ( ! $taskClass ) {
-                throw new Exception("Task class for $step not found.");
+                throw new RuntimeException("Task class for $step not found.");
             }
             $task = $this->createTaskObject($taskClass);
             $tasks[] = $task;
@@ -157,16 +158,19 @@ class Console extends Application
             return $this->config;
         }
 
-        if ( ! file_exists('phprelease.ini') ) {
-            throw new Exception("phprelease.ini not found, please run `phprelease init` command to get one.");
+        if ( file_exists('phprelease.ini') ) {
+            $config = parse_ini_file('phprelease.ini');
+            return $this->config = $config;
         }
-        $config = parse_ini_file('phprelease.ini');
-        return $this->config = $config;
+        return $this->config = array();
     }
-
 
     public function execute()
     {
+        if ( ! file_exists('phprelease.ini') ) {
+            throw new RuntimeException("phprelease.ini not found, please run `phprelease init` command to get one.");
+        }
+
         $config = $this->getConfig();
         if ( isset($config['autoload']) ) {
             if ( $a = $config['autoload'] ) {
