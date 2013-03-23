@@ -2,8 +2,8 @@
     "name": "corneltek\/phprelease",
     "version": "1.0.28",
     "require": {
-        "corneltek\/cliframework": "*.*",
-        "corneltek\/universal": "*.*"
+        "corneltek\/cliframework": "1.5.*",
+        "corneltek\/universal": "1.3.*"
     },
     "require-dev": {
         "corneltek\/phpunit-testmore": "dev-master"
