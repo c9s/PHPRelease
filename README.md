@@ -30,6 +30,9 @@ going to the next step.
 
 ```ini
 Steps = BumpVersion, scripts/compile, GitTag
+
+; to read version from php class file or from phpdoc "@VERSION ..."
+VersionFrom = src/PHPRelease/Console.php
 ```
 
 Each task has its own options, run help command, you should see the options from these tasks:
