@@ -9,7 +9,7 @@ class InitCommand extends Command
     public function execute()
     {
         $content =<<<END
-Steps = PHPUnit, BumpVersion, scripts/compile, GitCommit, GitTag, GitPush, GitPushTags
+Steps = PHPUnit, BumpVersion, GitCommit, GitTag, GitPush, GitPushTags
 ; VersionFrom = src/PHPRelease/Console.php
 END;
         if ( ! file_exists('phprelease.ini') ) {
