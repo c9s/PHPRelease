@@ -34,4 +34,21 @@ Steps = BumpVersion, scripts/compile, GitTag
 
 Each task has its own options, run help command, you should see the options from these tasks:
 
+    $ phprelease help
+    Application brief
+
+    Usage
+        phprelease [options] [command] [argument1 argument2...]
+
+    Options
+           -v, --verbose   Print verbose message.
+             -d, --debug   Print debug message.
+             -q, --quiet   Be quiet.
+              -h, --help   help
+               --version   show version
+                   --dry   dryrun mode.
+            --bump-major   bump major (X) version.
+            --bump-minor   bump minor (Y) version.
+            --bump-patch   bump patch (Z) version, this is the default.
+       --remote <value>+   git remote names for pushing.
 
