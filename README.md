@@ -32,8 +32,8 @@ Create phprelease.ini config file by a simple command:
 $ phprelease init
 ```
 
-The above command created
-
+The above command creates a `phprelease.ini` config file, you can also edit it
+by yourself:
 
 ```ini
 Steps = BumpVersion, GitTag
