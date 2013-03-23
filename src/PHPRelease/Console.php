@@ -25,6 +25,12 @@ class Console extends Application
         }
     }
 
+    public function init()
+    {
+        parent::init();
+        $this->registerCommand('init');
+    }
+
     public function findTaskClass($step)
     {
         if ( class_exists( $step, true ) ) {
