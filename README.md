@@ -1,14 +1,13 @@
 PHPRelease
 ==========
+[![Build Status](https://travis-ci.org/c9s/PHPRelease.png?branch=master)](https://travis-ci.org/c9s/PHPRelease)
 
-phprelease manages your package release process.
+The simplest way to define your release process.
 
 Features
 ---------
 
-- Automatically version bumping for composer, onion, phpdoc or class const.
-- Support Composer.
-- Support Onion.
+- Automatically version bumping for Composer, Onion, PHPDoc or Class constant.
 - Support version parsing from PHPDoc or class const.
 - Git tagging, pushing.
 - Simplest config.
