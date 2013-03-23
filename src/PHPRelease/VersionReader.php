@@ -3,8 +3,8 @@ namespace PHPRelease;
 
 class VersionReader
 {
-    const classVersionPattern = '#const\s+version\s+=\s+["\'](.*?)["\'];#i';
-    const phpdocVersionPattern = '#@version\s+(\S+)#i';
+    const classVersionPattern = '#const\s+version\s*=\s*["\'](.*?)["\']\s*;#ism';
+    const phpdocVersionPattern = '#@version\s+(\S+)#ism';
 
     public function readFromSourceFiles($versionFromFiles)
     {
@@ -38,7 +38,6 @@ class VersionReader
             }
         }
     }
-
 
     public function readFromComposerJson()
     {

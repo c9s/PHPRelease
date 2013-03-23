@@ -2,11 +2,12 @@
 namespace PHPRelease;
 use CLIFramework\Application;
 use RuntimeException;
+use PHPRelease\VersionReader;
 
 class Console extends Application
 {
     const NAME = "PHPRelease";
-    const VERSION = "0.0.1";
+    const VERSION = "1.1.5";
 
     public $config = array();
 
@@ -44,6 +45,40 @@ class Console extends Application
             $tasks[] = $task;
         }
         return $tasks;
+    }
+
+
+    public function getVersionFromFiles()
+    {
+        if ( isset($this->config['VersionFrom']) && $this->config['VersionFrom'] ) {
+            return preg_split('#\s*,\s*#', $this->config['VersionFrom']);
+        }
+        return array();
+    }
+
+    public function getCurrentVersion()
+    {
+        $reader = new VersionReader;
+        $versionFromFiles = $this->getVersionFromFiles();
+        if ( ! empty($versionFromFiles) ) {
+            if ( $versionString = $reader->readFromSourceFiles($versionFromFiles) ) {
+                $this->logger->debug("Found version from source files.");
+                return $versionString;
+            }
+        }
+
+        if ( $versionString = $reader->readFromComposerJson() ) {
+            $this->logger->debug("Found version from composer.json");
+            return $versionString;
+        }
+
+        if ( $versionString = $reader->readFromPackageINI() ) {
+            $this->logger->debug("Found version from package.ini");
+            return $versionString;
+        }
+
+        $this->logger->error("Version string not found, aborting...");
+        return false;
     }
 
     public function runSteps($steps, $dryrun = false)

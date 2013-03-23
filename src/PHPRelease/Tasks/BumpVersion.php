@@ -6,9 +6,6 @@ use PHPRelease\VersionReader;
 
 class BumpVersion extends BaseTask
 {
-    public $classVersionPattern = '#const\s+version\s+=\s+["\'](.*?)["\'];#i';
-    public $phpdocVersionPattern = '#@version\s+(\S+)#i';
-
     public function options($opts)
     {
         $opts->add('bump-major','bump major (X) version.');
@@ -16,58 +13,19 @@ class BumpVersion extends BaseTask
         $opts->add('bump-patch','bump patch (Z) version, this is the default.');
     }
 
-    public function getVersionFromFiles()
-    {
-        if ( isset($this->config['VersionFrom']) && $this->config['VersionFrom'] ) {
-            return preg_split('#\s*,\s*#', $this->config['VersionFrom']);
-        }
-        return array();
-    }
 
-
-
-    public function parseVersionFromSourceFile($file)
-    {
-        $content = file_get_contents($file);
-        // find class const
-        if ( preg_match( $this->classVersionPattern, $content, $regs) ) {
-            return $regs[1];
-        } elseif ( preg_match( $this->phpdocVersionPattern, $content, $regs) ) {
-            return $regs[1];
-        }
-    }
 
     public function replaceVersionFromSourceFile($file, $newVersionString)
     {
         $content = file_get_contents($file);
-        $content = preg_replace( VersionReader::classVersionPattern, 'const VERSION = "\1";' , $content);
-        $content = preg_replace( VersionReader::phpdocVersionPattern, '@VERSION \1', $content);
+        $content = preg_replace( VersionReader::classVersionPattern, "const VERSION = \"$newVersionString\";" , $content);
+        $content = preg_replace( VersionReader::phpdocVersionPattern, "@VERSION $newVersionString", $content);
         return file_put_contents($file, $content);
     }
 
     public function run()
     {
-        $reader = new VersionReader;
-        $versionString = null;
-        $versionFromFiles = $this->getVersionFromFiles();
-
-        if ( ! empty($versionFromFiles) ) {
-            $versionString = $reader->readFromSourceFiles($versionFromFiles);
-        }
-        if ( ! $versionString ) {
-            $this->logger->debug("Reading version info from composer.json");
-            $versionString = $reader->readFromComposerJson();
-        }
-        if ( ! $versionString ) {
-            $this->logger->debug("Reading version info from package.ini");
-            $versionString = $reader->readFromPackageINI();
-        }
-
-        if ( ! $versionString ) {
-            $this->logger->error("Version string not found, aborting...");
-            return false;
-        }
-
+        $versionString = $this->app->getCurrentVersion();
         $versionParser = new VersionParser;
         $versionInfo = $versionParser->parseVersionString($versionString);
 
@@ -86,6 +44,7 @@ class BumpVersion extends BaseTask
         $this->logger->info("===> Version bump from $versionString to $newVersionString");
 
 
+        $versionFromFiles = $this->app->getVersionFromFiles();
         foreach( $versionFromFiles as $file ) {
             if ( false === $this->replaceVersionFromSourceFile($file, $newVersionString) ) {
                 $this->logger->error("Version update failed: $file");
@@ -137,7 +96,7 @@ class BumpVersion extends BaseTask
     public function createVersionString($info)
     {
         $str = sprintf('%d.%d.%d', $info['major'], $info['minor'] , $info['patch'] );
-        if ( $info['stability'] && $info['stability'] != 'stable' ) {
+        if ( isset($info['stability']) && $info['stability'] != 'stable' ) {
             $str .= '-' . $info['stability'];
         }
         return $str;
