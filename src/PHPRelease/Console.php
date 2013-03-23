@@ -8,7 +8,7 @@ use PHPRelease\VersionReader;
 class Console extends Application
 {
     const NAME = "PHPRelease";
-    const VERSION = "1.0.29";
+    const VERSION = "1.0.30";
 
     public function brief()
     {
@@ -21,7 +21,8 @@ class Console extends Application
     {
         parent::options($opts);
         $opts->add('dryrun','dryrun mode.');
-        $opts->add('s|skip+','skip');
+        $opts->add('skip+','skip specific step');
+
         foreach( $this->getTaskObjects() as $task ) {
             $task->options($opts);
         }
@@ -154,6 +155,7 @@ class Console extends Application
         if ( isset($config['Steps']) ) {
             $steps = preg_split('#\s*,\s*#', $config['Steps'] );
         }
+
         if ( $this->options->steps ) {
             $keys = array_combine( $steps , $steps );
             foreach( $this->options->steps as $s ) {
