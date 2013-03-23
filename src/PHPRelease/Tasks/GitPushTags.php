@@ -12,7 +12,7 @@ class GitPushTags extends BaseTask
     public function execute()
     {
         $remotes = array('origin');
-        if ( $this->options->remote === 'all' ) {
+        if ( in_array('all',$this->options->remote) ) {
             $remotes = explode("\n",shell_exec('git remote'));
         } elseif ( $this->options->remote ) {
             $remotes = $this->options->remote;
