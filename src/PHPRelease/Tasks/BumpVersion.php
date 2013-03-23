@@ -13,8 +13,6 @@ class BumpVersion extends BaseTask
         $opts->add('bump-patch','bump patch (Z) version, this is the default.');
     }
 
-
-
     public function replaceVersionFromSourceFile($file, $newVersionString)
     {
         $content = file_get_contents($file);
@@ -41,6 +39,11 @@ class BumpVersion extends BaseTask
         }
 
         $newVersionString = $this->createVersionString($versionInfo);
+
+        if ( $input = $this->app->ask("Bump version [$newVersionString]:") ) {
+            $newVersionString = $input;
+        }
+
         $this->logger->info("===> Version bump from $versionString to $newVersionString");
 
 
