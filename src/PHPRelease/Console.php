@@ -156,6 +156,10 @@ class Console extends Application
         if ( $this->config ) {
             return $this->config;
         }
+
+        if ( ! file_exists('phprelease.ini') ) {
+            throw new Exception("phprelease.ini not found, please run `phprelease init` command to get one.");
+        }
         $config = parse_ini_file('phprelease.ini');
         return $this->config = $config;
     }
