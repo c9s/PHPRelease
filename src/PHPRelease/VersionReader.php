@@ -6,6 +6,18 @@ class VersionReader
     const classVersionPattern = '#const\s+version\s+=\s+["\'](.*?)["\'];#i';
     const phpdocVersionPattern = '#@version\s+(\S+)#i';
 
+    public function readFromSourceFiles($versionFromFiles)
+    {
+        if ( empty($versionFromFiles) )
+            return;
+
+        foreach( $versionFromFiles as $file ) {
+            if ( $versionString = $this->readFromSourceFile($file) ) {
+                return $versionString;
+            }
+        }
+    }
+
     public function readFromSourceFile($file)
     {
         $content = file_get_contents($file);

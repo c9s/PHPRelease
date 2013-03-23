@@ -48,16 +48,12 @@ class BumpVersion extends BaseTask
     public function run()
     {
         $reader = new VersionReader;
-
         $versionString = null;
         $versionFromFiles = $this->getVersionFromFiles();
+
         if ( ! empty($versionFromFiles) ) {
-            foreach( $versionFromFiles as $file ) {
-                if ( $versionString = $reader->readFromSourceFile($file) ) {
-                    break;
-                }
-            }
-        } 
+            $versionString = $reader->readFromSourceFiles($versionFromFiles);
+        }
         if ( ! $versionString ) {
             $this->logger->debug("Reading version info from composer.json");
             $versionString = $reader->readFromComposerJson();
@@ -65,6 +61,11 @@ class BumpVersion extends BaseTask
         if ( ! $versionString ) {
             $this->logger->debug("Reading version info from package.ini");
             $versionString = $reader->readFromPackageINI();
+        }
+
+        if ( ! $versionString ) {
+            $this->logger->error("Version string not found, aborting...");
+            return false;
         }
 
         $versionParser = new VersionParser;
