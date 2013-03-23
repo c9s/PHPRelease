@@ -54,6 +54,5 @@ Each task has its own options, run help command, you should see the options from
 
 You can also test your release steps in dry-run mode:
 
-
-
+    phprelease --dryrun
 
