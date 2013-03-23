@@ -1,5 +1,6 @@
 <?php
 namespace PHPRelease\Tasks;
+use PHPRelease\VersionParser;
 
 class BumpVersion extends BaseTask
 {
@@ -61,8 +62,9 @@ class BumpVersion extends BaseTask
         }
 
 
+        $versionParser = new VersionParser;
+        $versionInfo = $versionParser->parseVersionString($versionString);
 
-        $versionInfo = $this->parseVersionString($versionString);
         if ( $this->options->{"bump-major"} ) {
             $this->bumpMajorVersion($versionInfo);
         } elseif ( $this->options->{"bump-minor"} ) {
@@ -155,19 +157,6 @@ class BumpVersion extends BaseTask
             $str .= '-' . $info['stability'];
         }
         return $str;
-    }
-
-    public function parseVersionString($version)
-    {
-        if ( preg_match('#^(\d+)\.(\d+)(?:\.(\d+))?(-(dev|alpha|beta|rc\d*))?$#x',$version, $regs ) ) {
-            return array(
-                'major' => $regs[1],
-                'minor' => (@$regs[2] ?: 0),
-                'patch' => (@$regs[3] ?: 0),
-                'stability' => (@$regs[4] ?: null),
-            );
-        }
-        return array();
     }
 }
 
