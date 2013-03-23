@@ -39,9 +39,9 @@ by yourself:
 Steps = PHPUnit, BumpVersion, GitTag, GitPush, GitPushTags
 ```
 
-The release steps may contains script files, you can simply insert the script path and 
-phprelease will run it for you. the return code 0 means we are 
-going to the next step.
+The release steps may contains script files, you can simply insert the script
+path and phprelease will run it for you. the return code 0 means we are going
+to the next step.
 
 ```ini
 Steps = BumpVersion, scripts/compile, GitTag
@@ -49,6 +49,9 @@ Steps = BumpVersion, scripts/compile, GitTag
 ; to read version from php class file or from phpdoc "@VERSION ..."
 VersionFrom = src/PHPRelease/Console.php
 ```
+
+If you defined your version string in your PHP source file or class const, you can
+define a `VersionFrom` option, to bump version from php source file, 
 
 Each task has its own options, run help command, you should see the options from these tasks:
 
