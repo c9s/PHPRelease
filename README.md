@@ -25,7 +25,15 @@ $ mv phprelease /usr/bin
 Usage
 -----
 
-Create phprelease.ini config file:
+Create phprelease.ini config file by a simple command:
+
+
+```sh
+$ phprelease init
+```
+
+The above command created
+
 
 ```ini
 Steps = BumpVersion, GitTag
