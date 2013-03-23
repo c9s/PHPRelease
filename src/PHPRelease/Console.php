@@ -149,7 +149,10 @@ class Console extends Application
     public function getSteps()
     {
         $config = $this->getConfig();
-        return preg_split('#\s*,\s*#', $config['Steps'] );
+        if ( isset($config['Steps']) ) {
+            return preg_split('#\s*,\s*#', $config['Steps'] );
+        }
+        return array();
     }
 
     public function getConfig()
