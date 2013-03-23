@@ -4,7 +4,7 @@ class BumpVersionTest extends PHPUnit_Framework_TestCase
 {
     public function test()
     {
-        $b = new PHPRelease\Tasks\BumpVersion(null,null,null);
+        $b = new PHPRelease\Tasks\BumpVersion(null);
         $p = new PHPRelease\VersionParser;
         $info = $p->parseVersionString('1.2.3');
         ok($info);
@@ -27,14 +27,14 @@ class BumpVersionTest extends PHPUnit_Framework_TestCase
 
     public function testPHPDocVersionParsing()
     {
-        $b = new PHPRelease\Tasks\BumpVersion(null,null,null,null);
-        is('0.0.1',$b->parseVersionFromSourceFile("tests/data/test.php"));
+        $reader = new PHPRelease\VersionReader;
+        is('0.0.1',$reader->readFromSourceFile("tests/data/test.php"));
     }
 
     public function testClassVersionConstParsing()
     {
-        $b = new PHPRelease\Tasks\BumpVersion(null,null,null,null);
-        is('0.0.1',$b->parseVersionFromSourceFile("tests/data/test2.php"));
+        $reader = new PHPRelease\VersionReader;
+        is('0.0.1',$reader->readFromSourceFile("tests/data/test2.php"));
     }
 }
 
