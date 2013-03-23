@@ -71,6 +71,7 @@ class Console extends Application
 
     public function getCurrentVersion()
     {
+        // XXX: Refactor to FindVersion task.
         $reader = new VersionReader;
         $versionFromFiles = $this->getVersionFromFiles();
         if ( ! empty($versionFromFiles) ) {
