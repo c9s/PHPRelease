@@ -5,7 +5,6 @@ use PHPRelease\VersionReader;
 
 class GitCommit extends BaseTask
 {
-
     public function options($options)
     {
     }
