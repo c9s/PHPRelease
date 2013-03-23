@@ -64,7 +64,7 @@ class Console extends Application
 
     public function execute()
     {
-        $config = parse_ini_file('.phprelease');
+        $config = parse_ini_file('phprelease.ini');
         if ( isset($config['autoload']) ) {
             if ( $a = $config['autoload'] ) {
                 $this->logger->info("===> Found autoload script, loading...");
