@@ -21,6 +21,7 @@ class Console extends Application
     {
         parent::options($opts);
         $opts->add('dryrun','dryrun mode.');
+        $opts->add('s|skip+','skip');
         foreach( $this->getTaskObjects() as $task ) {
             $task->options($opts);
         }
@@ -149,10 +150,18 @@ class Console extends Application
     public function getSteps()
     {
         $config = $this->getConfig();
+        $steps = array();
         if ( isset($config['Steps']) ) {
-            return preg_split('#\s*,\s*#', $config['Steps'] );
+            $steps = preg_split('#\s*,\s*#', $config['Steps'] );
         }
-        return array();
+        if ( $this->options->steps ) {
+            $keys = array_combine( $steps , $steps );
+            foreach( $this->options->steps as $s ) {
+                unset($keys[$s]);
+            }
+            $steps = array_keys($keys);
+        }
+        return $steps;
     }
 
     public function getConfig()
