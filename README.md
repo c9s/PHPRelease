@@ -72,3 +72,18 @@ You can also test your release steps in dry-run mode:
 
     phprelease --dryrun
 
+
+
+Hacking
+-------
+
+1. For this project.
+
+2. Get composer, and run:
+
+    composer install --dev
+
+3. Hack!
+
+
+
