@@ -21,9 +21,9 @@ class BumpVersion extends BaseTask
         return file_put_contents($file, $content);
     }
 
-    public function run()
+    public function execute()
     {
-        $versionString = $this->app->getCurrentVersion();
+        $versionString = $this->application->getCurrentVersion();
         $versionParser = new VersionParser;
         $versionInfo = $versionParser->parseVersionString($versionString);
 
@@ -42,14 +42,14 @@ class BumpVersion extends BaseTask
 
         $this->logger->info("Current Version: $versionString");
 
-        if ( $input = $this->app->ask("New Version [$newVersionString]:") ) {
+        if ( $input = $this->ask("New Version [$newVersionString]:") ) {
             $newVersionString = $input;
         }
 
         $this->logger->info("===> Version bump from $versionString to $newVersionString");
 
 
-        $versionFromFiles = $this->app->getVersionFromFiles();
+        $versionFromFiles = $this->application->getVersionFromFiles();
         foreach( $versionFromFiles as $file ) {
             if ( false === $this->replaceVersionFromSourceFile($file, $newVersionString) ) {
                 $this->logger->error("Version update failed: $file");

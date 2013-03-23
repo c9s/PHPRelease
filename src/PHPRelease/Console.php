@@ -7,7 +7,7 @@ use PHPRelease\VersionReader;
 class Console extends Application
 {
     const NAME = "PHPRelease";
-    const VERSION = "1.0.6";
+    const VERSION = "1.0.7";
 
     public $config = array();
 
@@ -20,6 +20,27 @@ class Console extends Application
         }
     }
 
+    public function findTaskClass($step)
+    {
+        if ( class_exists( $step, true ) ) {
+            return $step;
+        } else {
+            // built-in task
+            $class = 'PHPRelease\\Tasks\\' . $step;
+            if ( class_exists($class, true ) ) {
+                return $class;
+            }
+        }
+    }
+
+    public function createTaskObject($class)
+    {
+        $task = $this->createCommand($class);
+        $task->setConfig($this->getConfig());
+        $task->setOptions($this->options);
+        return $task;
+    }
+
     public function getTaskObjects()
     {
         $tasks = array();
@@ -29,19 +50,11 @@ class Console extends Application
                 continue;
             }
 
-            $task = null;
-            if ( class_exists( $step, true ) ) {
-                $task = new $step( $this, $this->logger, $this->getConfig() );
-            } else {
-                // built-in task
-                $taskClass = 'PHPRelease\\Tasks\\' . $step;
-                if ( class_exists($taskClass, true ) ) {
-                    $task = new $taskClass( $this, $this->logger , $this->getConfig() );
-                }
+            $taskClass = $this->findTaskClass($step);
+            if ( ! $taskClass ) {
+                throw new Exception("Task class for $step not found.");
             }
-            if ( ! $task ) {
-                throw new Exception("Task $step not found.");
-            }
+            $task = $this->createTaskObject($taskClass);
             $tasks[] = $task;
         }
         return $tasks;
@@ -100,24 +113,17 @@ class Console extends Application
                 }
             }
 
-            $task = null;
-            if ( class_exists( $step, true ) ) {
-                $task = new $step( $this, $this->logger , $this->getConfig(), $this->options );
-            } else {
-                // built-in task
-                $taskClass = 'PHPRelease\\Tasks\\' . $step;
-                if ( class_exists($taskClass, true ) ) {
-                    $task = new $taskClass( $this, $this->logger , $this->getConfig() , $this->options );
-                }
-            }
-            if ( ! $task ) {
+            $taskClass = $this->findTaskClass($step);
+            if ( ! $taskClass ) {
                 $this->logger->error("===> Taks $step not found, aborting...");
                 exit(0);
             }
 
+            $task = $this->createTaskObject($taskClass);
+
             $this->logger->info("===> Running " . get_class($task) );
             if ( ! $dryrun ) {
-                $retval = $task->run();
+                $retval = $task->execute();
                 if ( false === $retval ) {
                     $this->logger->error("===> $task failed, aborting...");
                     exit(0);

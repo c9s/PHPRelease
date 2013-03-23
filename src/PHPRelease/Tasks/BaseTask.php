@@ -1,26 +1,17 @@
 <?php
 namespace PHPRelease\Tasks;
+use CLIFramework\Command;
 
-abstract class BaseTask
+abstract class BaseTask extends Command
 {
-    public $app;
-    public $logger;
     public $config;
-    public $options;
 
-    public function __construct($app, $logger, $config, $options = null)
+    public function setConfig($config)
     {
-        $this->app = $app;
-        $this->logger = $logger;
         $this->config = $config;
-        if ( $options ) {
-            $this->options = $options;
-        }
     }
 
     public function options($options) {  }
-
-    abstract function run();
 }
 
 
