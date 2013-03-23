@@ -48,6 +48,22 @@ Steps = BumpVersion, scripts/compile, GitTag
 
 ```
 
+Then, to release your package, simply type:
+
+```sh
+$ phprelease
+```
+
+Skip Specific Step
+--------------------------
+
+```sh
+$ phprelease --skip BumpVersion
+```
+
+Version From
+------------
+
 If you defined your version string in your PHP source file or class const, 
 to bump version from php source file, you can simply define a `VersionFrom` option:
 
@@ -56,6 +72,10 @@ to bump version from php source file, you can simply define a `VersionFrom` opti
 ; to read version from php class file or from phpdoc "@VERSION ..."
 VersionFrom = src/PHPRelease/Console.php
 ```
+
+
+Task Options
+------------
 
 Each task has its own options, run help command, you should see the options from these tasks:
 
