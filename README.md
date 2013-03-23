@@ -13,6 +13,14 @@ Features
 - Git tagging, pushing.
 - Simplest config.
 
+Install
+-------
+
+```sh
+$ curl -O https://raw.github.com/c9s/PHPRelease/master/phprelease
+$ chmod +x phprelease
+$ mv phprelease /usr/bin
+```
 
 Usage
 -----
