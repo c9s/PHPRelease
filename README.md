@@ -24,11 +24,14 @@ Steps = BumpVersion, GitTag
 ```
 
 
-The release steps may contains script files, simply insert the script path and 
+The release steps may contains script files, you can simply insert the script path and 
 phprelease will run it for you. the return code from the script 0 means we are 
 going to the next step.
 
 ```ini
 Steps = BumpVersion, scripts/compile, GitTag
 ```
+
+Each task has its own options, run help command, you should see the options from these tasks:
+
 
