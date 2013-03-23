@@ -1,5 +1,6 @@
-#!/usr/bin/env
+#!/usr/bin/env php
 <?php
-require 'vendor/autoload.php';
+$loader = require 'vendor/autoload.php';
+$loader->add('PHPRelease','src');
 $app = PHPRelease\Console::getInstance();
 $app->run( $argv );
