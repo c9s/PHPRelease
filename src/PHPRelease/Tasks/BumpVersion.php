@@ -40,7 +40,9 @@ class BumpVersion extends BaseTask
 
         $newVersionString = $this->createVersionString($versionInfo);
 
-        if ( $input = $this->app->ask("Bump version [$newVersionString]:") ) {
+        $this->logger->info("Current Version: $versionString");
+
+        if ( $input = $this->app->ask("New Version [$newVersionString]:") ) {
             $newVersionString = $input;
         }
 
