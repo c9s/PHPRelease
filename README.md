@@ -90,13 +90,12 @@ You can also test your release steps in dry-run mode:
 Built-In Tasks
 --------------
 
-        BaseTask.php
-        BumpVersion.php
-        GitCommit.php
-        GitPush.php
-        GitPushTags.php
-        GitTag.php
-        PHPUnit.php
+    BumpVersion
+    GitCommit
+    GitPush
+    GitPushTags
+    GitTag
+    PHPUnit
 
 
 Hacking
