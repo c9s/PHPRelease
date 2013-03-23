@@ -14,6 +14,7 @@ class GitPush extends BaseTask
         $remotes = array('origin');
         if ( in_array('all',$this->options->remote) ) {
             $remotes = explode("\n",shell_exec('git remote'));
+            var_dump( $remotes ); 
         } elseif ( $this->options->remote ) {
             $remotes = $this->options->remote;
         }
