@@ -1,6 +1,8 @@
 <?php
 namespace PHPRelease\Tasks;
 use PHPRelease\VersionParser;
+use PHPRelease\VersionReader;
+
 
 class BumpVersion extends BaseTask
 {
@@ -38,29 +40,32 @@ class BumpVersion extends BaseTask
     public function replaceVersionFromSourceFile($file, $newVersionString)
     {
         $content = file_get_contents($file);
-        $content = preg_replace( $this->classVersionPattern, 'const VERSION = "\1";' , $content);
-        $content = preg_replace( $this->phpdocVersionPattern, '@VERSION \1', $content);
+        $content = preg_replace( VersionReader::classVersionPattern, 'const VERSION = "\1";' , $content);
+        $content = preg_replace( VersionReader::phpdocVersionPattern, '@VERSION \1', $content);
         return file_put_contents($file, $content);
     }
 
     public function run()
     {
+        $reader = new VersionReader;
+
         $versionString = null;
         $versionFromFiles = $this->getVersionFromFiles();
         if ( ! empty($versionFromFiles) ) {
             foreach( $versionFromFiles as $file ) {
-                if ( $versionString = $this->parseVersionFromSourceFile($file) ) {
+                if ( $versionString = $reader->readFromSourceFile($file) ) {
                     break;
                 }
             }
         } 
         if ( ! $versionString ) {
-            $versionString = $this->readVersionFromComposerJson();
+            $this->logger->debug("Reading version info from composer.json");
+            $versionString = $reader->readFromComposerJson();
         }
         if ( ! $versionString ) {
-            $this->readVersionFromPackageINI();
+            $this->logger->debug("Reading version info from package.ini");
+            $versionString = $reader->readFromPackageINI();
         }
-
 
         $versionParser = new VersionParser;
         $versionInfo = $versionParser->parseVersionString($versionString);
@@ -91,17 +96,6 @@ class BumpVersion extends BaseTask
         $this->config['CurrentVersion'] = $newVersionString;
     }
 
-    public function readVersionFromPackageINI()
-    {
-        if ( file_exists("package.ini") ) {
-            $this->logger->debug("Reading version info from package.ini");
-            $config = parse_ini_file("package.ini",true);
-            if ( isset($config['package']['version']) ) {
-                return $config['package']['version'];
-            }
-        }
-    }
-
     public function writeVersionToPackageINI($newVersion)
     {
         if ( file_exists("package.ini") ) {
@@ -109,17 +103,6 @@ class BumpVersion extends BaseTask
             $content = file_get_contents("package.ini");
             if ( preg_replace('#^version\s+=\s+.*?$#ims', "version = $newVersion", $content) ) {
                 return file_put_contents("package.ini", $content);
-            }
-        }
-    }
-
-    public function readVersionFromComposerJson()
-    {
-        if ( file_exists("composer.json") ) {
-            $this->logger->debug("Reading version info from composer.json");
-            $composer = json_decode(file_get_contents("composer.json"),true);
-            if ( isset($composer['version']) ) {
-                return $composer['version'];
             }
         }
     }
