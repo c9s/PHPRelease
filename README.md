@@ -52,6 +52,11 @@ Each task has its own options, run help command, you should see the options from
             --bump-patch   bump patch (Z) version, this is the default.
        --remote <value>+   git remote names for pushing.
 
+
+So to bump the major verion, simply pass the flag:
+
+    phprelease --bump-major
+
 You can also test your release steps in dry-run mode:
 
     phprelease --dryrun
