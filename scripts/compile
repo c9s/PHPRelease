@@ -1,0 +1,13 @@
+#!/bin/bash
+onion -d compile \
+    --lib src \
+    --lib vendor/corneltek/cliframework/src \
+    --lib vendor/corneltek/getoptionkit/src \
+    --lib vendor/corneltek/universal/src \
+    --lib vendor/corneltek/fileutil/src \
+    --classloader \
+    --bootstrap scripts/phprelease.php \
+    --executable \
+    --output phprelease.phar
+mv phprelease.phar phprelease
+chmod +x phprelease
