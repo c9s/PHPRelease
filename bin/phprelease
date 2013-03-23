@@ -1,5 +1,5 @@
 #!/usr/bin/env
 <?php
 require 'vendor/autoload.php';
-$app = PhpRelease\Console::getInstance();
+$app = PHPRelease\Console::getInstance();
 $app->run( $argv );

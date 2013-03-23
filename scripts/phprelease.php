@@ -9,5 +9,5 @@
  * file that was distributed with this source code.
  *
  */
-$app = PhpRelease\Console::getInstance();
+$app = PHPRelease\Console::getInstance();
 $app->run( $argv );
