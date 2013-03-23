@@ -1,7 +1,7 @@
 PHPRelease
 ==========
 
-phprelease manages your package release.
+phprelease manages your package release process.
 
 Features
 ---------
@@ -10,7 +10,7 @@ Features
 - Support Composer.
 - Support Onion.
 - Support version parsing from PHPDoc or class const.
-- Git tagging.
+- Git tagging, pushing.
 - Simplest config.
 
 
