@@ -156,9 +156,9 @@ class Console extends Application
             $steps = preg_split('#\s*,\s*#', $config['Steps'] );
         }
 
-        if ( $this->options->steps ) {
+        if ( $this->options->skip ) {
             $keys = array_combine( $steps , $steps );
-            foreach( $this->options->steps as $s ) {
+            foreach( $this->options->skip as $s ) {
                 unset($keys[$s]);
             }
             $steps = array_keys($keys);
