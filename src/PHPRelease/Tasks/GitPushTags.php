@@ -5,12 +5,23 @@ class GitPushTags extends BaseTask
 {
     public function options($options)
     {
+        $options->add('remote+','git remote names for pushing.');
     }
 
     public function execute()
     {
-        passthru("git push origin --tags", $retval);
-        return $retval == 0;
+        $remotes = array('origin');
+        if ( $this->options->remote === 'all' ) {
+            $remotes = explode("\n",shell_exec('git remote'));
+        } elseif ( $this->options->remote ) {
+            $remotes = $this->options->remote;
+        }
+        foreach ( $remotes as $remote ) {
+            passthru("git push $remote --tags", $retval);
+            if ( $retval != 0 )
+                return false;
+        }
+        return true;
     }
 }
 
