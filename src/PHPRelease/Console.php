@@ -7,7 +7,7 @@ use PHPRelease\VersionReader;
 class Console extends Application
 {
     const NAME = "PHPRelease";
-    const VERSION = "1.0.16";
+    const VERSION = "1.0.17";
 
     public function brief()
     {
@@ -127,11 +127,11 @@ class Console extends Application
 
             $task = $this->createTaskObject($taskClass);
 
-            $this->logger->info("===> Running " . get_class($task) );
+            $this->logger->info("===> Running $taskClass");
             if ( ! $dryrun ) {
                 $retval = $task->execute();
                 if ( false === $retval ) {
-                    $this->logger->error("===> $task failed, aborting...");
+                    $this->logger->error("===> $taskClass failed, aborting...");
                     exit(0);
                 }
             }
