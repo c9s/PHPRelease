@@ -36,7 +36,7 @@ The above command creates a `phprelease.ini` config file, you can also edit it
 by yourself:
 
 ```ini
-Steps = BumpVersion, GitTag
+Steps = PHPUnit, BumpVersion, GitTag, GitPush, GitPushTags
 ```
 
 The release steps may contains script files, you can simply insert the script path and 
