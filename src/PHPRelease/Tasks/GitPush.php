@@ -18,6 +18,7 @@ class GitPush extends BaseTask
             $remotes = $this->options->remote;
         }
         foreach ( $remotes as $remote ) {
+            $this->logger->info("---> Pushing to remote $remote...");
             passthru("git push $remote $branch", $retval);
             if ( $retval != 0 )
                 return false;

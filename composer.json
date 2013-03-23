@@ -1,6 +1,6 @@
 {
     "name": "corneltek\/phprelease",
-    "version": "1.0.18",
+    "version": "1.0.19",
     "require": {
         "corneltek\/cliframework": "*.*",
         "corneltek\/universal": "*.*"
