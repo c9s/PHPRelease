@@ -39,7 +39,6 @@ by yourself:
 Steps = BumpVersion, GitTag
 ```
 
-
 The release steps may contains script files, you can simply insert the script path and 
 phprelease will run it for you. the return code from the script 0 means we are 
 going to the next step.
