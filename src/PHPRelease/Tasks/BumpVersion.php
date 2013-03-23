@@ -52,8 +52,6 @@ class BumpVersion extends BaseTask
         }
         $this->writeVersionToPackageINI($newVersionString);
         $this->writeVersionToComposerJson($newVersionString);
-
-        $this->config['CurrentVersion'] = $newVersionString;
     }
 
     public function writeVersionToPackageINI($newVersion)
