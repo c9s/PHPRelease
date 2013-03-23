@@ -19,7 +19,7 @@ class Console extends Application
     public function options($opts)
     {
         parent::options($opts);
-        $opts->add('dry','dryrun mode.');
+        $opts->add('dryrun','dryrun mode.');
         foreach( $this->getTaskObjects() as $task ) {
             $task->options($opts);
         }
@@ -115,8 +115,8 @@ class Console extends Application
                         $this->logger->error("===> $step failed, aborting...");
                         exit(0);
                     }
-                    continue;
                 }
+                continue;
             }
 
             $taskClass = $this->findTaskClass($step);
