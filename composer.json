@@ -1,0 +1,16 @@
+{
+    "name": "corneltek/phprelease",
+    "version": "0.0.1",
+    "require": {
+        "corneltek/cliframework": "*.*",
+        "corneltek/universal": "*.*"
+    },
+    "require-dev": {
+        "corneltek/phpunit-testmore": "dev-master"
+    },
+    "autoload": {
+        "psr-0": {
+            "PhpRelease": "src"
+        }
+    }
+}
