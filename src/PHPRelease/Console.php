@@ -5,10 +5,21 @@ use Exception;
 use RuntimeException;
 use PHPRelease\VersionReader;
 
+function findbin($bin)
+{
+    $paths = explode(':',getenv('PATH') );
+    foreach( $paths as $path ) {
+        if ( file_exists($path . DIRECTORY_SEPARATOR . $bin ) ) {
+            return true;
+        }
+    }
+    return false;
+}
+
 class Console extends Application
 {
     const NAME = "PHPRelease";
-    const VERSION = "1.0.33";
+    const VERSION = "1.0.34";
 
     public function brief()
     {
@@ -60,7 +71,7 @@ class Console extends Application
         $tasks = array();
         $steps = $this->getSteps();
         foreach( $steps as $step ) {
-            if ( file_exists($step) ) {
+            if ( file_exists($step)  || findbin($step) ) {
                 continue;
             }
 
@@ -112,10 +123,7 @@ class Console extends Application
     public function runSteps($steps, $dryrun = false)
     {
         foreach( $steps as $step ) {
-            if ( file_exists( $step ) ) {
-                if ( ! is_executable($step) ) {
-                    throw new RuntimeException("$step is not an executable.");
-                }
+            if ( file_exists( $step ) || findbin($step) ) {
                 $this->logger->info("===> Running $step");
                 if ( ! $dryrun ) {
                     $lastline = system($step, $retval);
