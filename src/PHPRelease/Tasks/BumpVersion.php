@@ -11,6 +11,7 @@ class BumpVersion extends BaseTask
         $opts->add('bump-major','bump major (X) version.');
         $opts->add('bump-minor','bump minor (Y) version.');
         $opts->add('bump-patch','bump patch (Z) version, this is the default.');
+        $opts->add('prompt-version','prompt for version');
     }
 
     public function replaceVersionFromSourceFile($file, $newVersionString)
@@ -42,8 +43,10 @@ class BumpVersion extends BaseTask
 
         $this->logger->info("Current Version: $versionString");
 
-        if ( $input = $this->ask("New Version [$newVersionString]:") ) {
-            $newVersionString = $input;
+        if ( $this->options->{"prompt-version"} ) {
+            if ( $input = $this->ask("New Version [$newVersionString]:") ) {
+                $newVersionString = $input;
+            }
         }
 
         $this->logger->info("===> Version bump from $versionString to $newVersionString");
