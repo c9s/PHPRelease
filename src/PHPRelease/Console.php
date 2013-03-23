@@ -8,7 +8,7 @@ use PHPRelease\VersionReader;
 class Console extends Application
 {
     const NAME = "PHPRelease";
-    const VERSION = "1.0.24";
+    const VERSION = "1.0.25";
 
     public function brief()
     {
