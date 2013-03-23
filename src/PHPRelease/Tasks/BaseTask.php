@@ -3,12 +3,14 @@ namespace PHPRelease\Tasks;
 
 abstract class BaseTask
 {
+    public $app;
     public $logger;
     public $config;
     public $options;
 
-    public function __construct($logger, $config, $options = null)
+    public function __construct($app, $logger, $config, $options = null)
     {
+        $this->app = $app;
         $this->logger = $logger;
         $this->config = $config;
         if ( $options ) {

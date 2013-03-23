@@ -8,7 +8,7 @@ class Console extends Application
     const NAME = "PHPRelease";
     const VERSION = "0.0.1";
 
-    public $config;
+    public $config = array();
 
     public function options($opts)
     {
@@ -30,12 +30,12 @@ class Console extends Application
 
             $task = null;
             if ( class_exists( $step, true ) ) {
-                $task = new $step( $this->logger, $this->getConfig() );
+                $task = new $step( $this, $this->logger, $this->getConfig() );
             } else {
                 // built-in task
                 $taskClass = 'PHPRelease\\Tasks\\' . $step;
                 if ( class_exists($taskClass, true ) ) {
-                    $task = new $taskClass( $this->logger , $this->getConfig() );
+                    $task = new $taskClass( $this, $this->logger , $this->getConfig() );
                 }
             }
             if ( ! $task ) {
@@ -67,12 +67,12 @@ class Console extends Application
 
             $task = null;
             if ( class_exists( $step, true ) ) {
-                $task = new $step( $this->logger , $this->getConfig(), $this->options );
+                $task = new $step( $this, $this->logger , $this->getConfig(), $this->options );
             } else {
                 // built-in task
                 $taskClass = 'PHPRelease\\Tasks\\' . $step;
                 if ( class_exists($taskClass, true ) ) {
-                    $task = new $taskClass( $this->logger , $this->getConfig() , $this->options );
+                    $task = new $taskClass( $this, $this->logger , $this->getConfig() , $this->options );
                 }
             }
             if ( ! $task ) {
