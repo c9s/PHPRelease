@@ -86,11 +86,14 @@ class BumpVersion extends BaseTask
     public function bumpMinorVersion(& $versionInfo)
     {
         $versionInfo['minor'] = (@$versionInfo['minor'] ?: 0) + 1;
+        $versionInfo['patch'] = 0;
     }
 
     public function bumpMajorVersion(& $versionInfo)
     {
         $versionInfo['major'] = (@$versionInfo['major'] ?: 0) + 1;
+        $versionInfo['minor'] = 0;
+        $versionInfo['patch'] = 0;
     }
 
     public function bumpPatchVersion(& $versionInfo)
