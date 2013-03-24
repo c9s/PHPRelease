@@ -11,11 +11,13 @@ class GitPush extends BaseTask
     public function execute()
     {
         $branch = system('git rev-parse --abbrev-ref HEAD');
-        $remotes = array('origin');
+        $remotes = array();
         if ( $this->options->remote && in_array('all',$this->options->remote) ) {
             $remotes = explode("\n",trim(shell_exec('git remote')));
         } elseif ( $this->options->remote ) {
             $remotes = $this->options->remote;
+        } else {
+            $remotes = explode("\n",trim(shell_exec('git remote')));
         }
         foreach ( $remotes as $remote ) {
             $this->logger->info("---> Pushing to remote $remote...");
