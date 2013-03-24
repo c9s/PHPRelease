@@ -13,7 +13,7 @@ class VersionParserTest extends PHPUnit_Framework_TestCase
         ok( ! $info['stability'] );
     }
 
-    public function testVersionWithStability()
+    public function testVersionWithRCStability()
     {
         $p = new PHPRelease\VersionParser;
         $info = $p->parseVersionString('1.2.3-rc');
@@ -22,6 +22,17 @@ class VersionParserTest extends PHPUnit_Framework_TestCase
         is(2,$info['minor']);
         is(3,$info['patch']);
         is( 'rc', $info['stability'] );
+    }
+
+    public function testVersionWithAlphaStability()
+    {
+        $p = new PHPRelease\VersionParser;
+        $info = $p->parseVersionString('1.2.3-alpha');
+        ok($info);
+        is(1,$info['major']);
+        is(2,$info['minor']);
+        is(3,$info['patch']);
+        is( 'alpha', $info['stability'] );
     }
 }
 

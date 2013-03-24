@@ -3,6 +3,8 @@ namespace PHPRelease\Tasks;
 
 class GitTag extends BaseTask
 {
+    public function brief() { return "Tagging"; }
+
     public function execute()
     {
         // TODO: generate changelog diff from Changelog file

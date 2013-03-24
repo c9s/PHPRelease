@@ -4,6 +4,8 @@ namespace PHPRelease\Tasks;
 class GitPushTags extends BaseTask
 {
 
+    public function brief() { return 'Push tags to remotes'; }
+
     public function options($options)
     {
         $options->add('remote+','git remote names for pushing.');

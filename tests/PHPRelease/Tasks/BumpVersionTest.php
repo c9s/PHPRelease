@@ -8,10 +8,6 @@ class BumpVersionTest extends PHPUnit_Framework_TestCase
         $p = new PHPRelease\VersionParser;
         $info = $p->parseVersionString('1.2.3');
         ok($info);
-        is(1,$info['major']);
-        is(2,$info['minor']);
-        is(3,$info['patch']);
-        ok( ! $info['stability'] );
 
         $b->bumpMajorVersion($info);
         is(2,$info['major']);
