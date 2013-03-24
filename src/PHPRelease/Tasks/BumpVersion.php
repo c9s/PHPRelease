@@ -12,6 +12,16 @@ class BumpVersion extends BaseTask
         $opts->add('bump-minor','bump minor (Y) version.');
         $opts->add('bump-patch','bump patch (Z) version, this is the default.');
         $opts->add('prompt-version','prompt for version');
+
+        $opts->add('s|stability:','set stability');
+        foreach( $this->getStabilityKeys() as $s ) {
+            $opts->add($s, "set stability to $s.");
+        }
+    }
+
+    public function getStabilityKeys()
+    {
+        return array('dev','rc','rc1','rc2','rc3','rc4','rc5','beta','alpha','stable');
     }
 
     public function replaceVersionFromSourceFile($file, $newVersionString)
@@ -38,6 +48,18 @@ class BumpVersion extends BaseTask
             // this is the default behavior
             $this->bumpPatchVersion($versionInfo);
         }
+
+
+        if ( $s = $this->options->stability ) {
+            $versionInfo['stability'] = $s;
+        } else {
+            foreach( $this->getStabilityKeys() as $s ) {
+                if ( $this->options->{$s} ) {
+                    $versionInfo['stability'] = $s;
+                }
+            }
+        }
+
 
         $newVersionString = $this->createVersionString($versionInfo);
 
