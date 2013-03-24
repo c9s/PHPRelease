@@ -19,7 +19,7 @@ function findbin($bin)
 class Console extends Application
 {
     const NAME = "PHPRelease";
-    const VERSION = "1.1.1-beta";
+    const VERSION = "1.1.2-beta";
 
     public function brief()
     {
