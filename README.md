@@ -83,6 +83,9 @@ To bump minor version and set the stability suffix:
     $ phprelease --bump-minor --rc2
     ===> Bumping version from 2.2.3 => 2.3.0-rc2
 
+    $ phprelease --bump-minor --stable
+    ===> Bumping version from 2.2.3 => 2.3.0
+
 
 Skipping Specific Step
 --------------------------
