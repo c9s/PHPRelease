@@ -51,11 +51,20 @@ class BumpVersion extends BaseTask
 
 
         if ( $s = $this->options->stability ) {
-            $versionInfo['stability'] = $s;
+            if ( $s === "stable" ) {
+                unset( $versionInfo['stability'] );
+            } else {
+                $versionInfo['stability'] = $s;
+            }
         } else {
             foreach( $this->getStabilityKeys() as $s ) {
                 if ( $this->options->{$s} ) {
                     $versionInfo['stability'] = $s;
+                    break;
+                }
+                if ( $s === "stable" ) {
+                    unset( $versionInfo['stability'] );
+                    break;
                 }
             }
         }
