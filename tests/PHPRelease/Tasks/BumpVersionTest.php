@@ -9,15 +9,16 @@ class BumpVersionTest extends PHPUnit_Framework_TestCase
         $info = $p->parseVersionString('1.2.3');
         ok($info);
 
-        $b->bumpMajorVersion($info);
-        is(2,$info['major']);
-
-        $b->bumpMinorVersion($info);
-        is(3,$info['minor']);
-
         $b->bumpPatchVersion($info);
         is(4,$info['patch']);
 
+        $b->bumpMinorVersion($info);
+        is(3,$info['minor']);
+        is(0,$info['patch']);
+
+        $b->bumpMajorVersion($info);
+        is(2,$info['major']);
+        is(0,$info['minor']);
         // is('0.0.2',$b->bumpPatchVersion('0.0.1'));
     }
 
