@@ -53,7 +53,7 @@ Then, to release your package, simply type:
 $ phprelease
 ```
 
-Version Bumping
+Bumping Version
 ---------------
 
 To bump major version and do release:
@@ -84,15 +84,15 @@ To bump minor version and set the stability suffix:
     ===> Bumping version from 2.2.3 => 2.3.0-rc2
 
 
-Skip Specific Step
+Skipping Specific Step
 --------------------------
 
 ```sh
 $ phprelease --skip BumpVersion
 ```
 
-Version From
-------------
+Getting Version From PHP Source File
+-------------------------------------
 
 If you defined your version string in your PHP source file or class const, 
 to bump version from php source file, you can simply define a `VersionFrom` option:
