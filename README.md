@@ -53,6 +53,37 @@ Then, to release your package, simply type:
 $ phprelease
 ```
 
+Version Bumping
+---------------
+
+To bump major version and do release:
+
+    $ phprelease --bump-major
+    ===> Bumping version from 2.2.3 => 3.0.0
+
+To bump minor version and do release:
+
+    $ phprelease --bump-minor
+    ===> Bumping version from 2.2.3 => 2.3.0
+
+To bump minor version and set the stability suffix:
+
+    $ phprelease --bump-minor --dev
+    ===> Bumping version from 2.2.3 => 2.3.0-dev
+
+    $ phprelease --bump-minor --beta
+    ===> Bumping version from 2.2.3 => 2.3.0-beta
+
+    $ phprelease --bump-minor --rc
+    ===> Bumping version from 2.2.3 => 2.3.0-rc
+
+    $ phprelease --bump-minor --rc1
+    ===> Bumping version from 2.2.3 => 2.3.0-rc1
+
+    $ phprelease --bump-minor --rc2
+    ===> Bumping version from 2.2.3 => 2.3.0-rc2
+
+
 Skip Specific Step
 --------------------------
 
@@ -85,16 +116,27 @@ Each task has its own options, run help command, you should see the options from
         phprelease [options] [command] [argument1 argument2...]
 
     Options
-           -v, --verbose   Print verbose message.
-             -d, --debug   Print debug message.
-             -q, --quiet   Be quiet.
-              -h, --help   help
-               --version   show version
-                   --dry   dryrun mode.
-            --bump-major   bump major (X) version.
-            --bump-minor   bump minor (Y) version.
-            --bump-patch   bump patch (Z) version, this is the default.
-       --remote <value>+   git remote names for pushing.
+               -v, --verbose   Print verbose message.
+                 -d, --debug   Print debug message.
+                 -q, --quiet   Be quiet.
+                  -h, --help   help
+                   --version   show version
+                       --dry   dryrun mode.
+                --bump-major   bump major (X) version.
+                --bump-minor   bump minor (Y) version.
+                --bump-patch   bump patch (Z) version, this is the default.
+     -s, --stability <value>   set stability
+                       --dev   set stability to dev.
+                        --rc   set stability to rc.
+                       --rc1   set stability to rc1.
+                       --rc2   set stability to rc2.
+                       --rc3   set stability to rc3.
+                       --rc4   set stability to rc4.
+                       --rc5   set stability to rc5.
+                      --beta   set stability to beta.
+                     --alpha   set stability to alpha.
+                    --stable   set stability to stable.
+           --remote <value>+   git remote names for pushing.
 
 
 So to bump the major verion, simply pass the flag:
