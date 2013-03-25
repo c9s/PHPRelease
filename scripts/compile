@@ -1,10 +1,10 @@
 #!/bin/bash
+set -e
 onion compile \
     --lib src \
     --lib vendor/corneltek/cliframework/src \
     --lib vendor/corneltek/getoptionkit/src \
     --lib vendor/corneltek/universal/src \
-    --lib vendor/corneltek/fileutil/src \
     --classloader \
     --bootstrap scripts/phprelease.php \
     --executable \
