@@ -1,7 +1,7 @@
 <?php
 namespace PHPRelease\Tasks;
 
-class Onion extends BaseTask
+class OnionBuild extends BaseTask
 {
     public function execute()
     {
