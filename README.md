@@ -87,6 +87,17 @@ To bump minor version and set the stability suffix:
     ===> Bumping version from 2.2.3 => 2.3.0
 
 
+Configuring GitAdd Task
+------------------------
+
+To use GitAdd Task, you may simply add the config below to your phprelease.ini:
+
+```ini
+[GitAdd]
+Paths[] = src/
+Paths[] = tests/
+```
+
 Skipping Specific Step
 --------------------------
 
