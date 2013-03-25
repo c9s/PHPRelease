@@ -193,18 +193,20 @@ class Console extends Application
             throw new RuntimeException("phprelease.ini not found, please run `phprelease init` command to get one.");
         }
 
+        $input = $this->ask("Are you sure to release? [Press Enter To Continue]");
+
+
         $config = $this->getConfig();
-        if ( isset($config['autoload']) ) {
-            if ( $a = $config['autoload'] ) {
-                $this->logger->info("===> Found autoload script, loading...");
+        if ( isset($config['Autoload']) ) {
+            if ( $a = $config['Autoload'] ) {
+                $this->logger->info("===> Found autoload script, loading $a");
                 $loader = require $a;
             }
         }
         elseif ( file_exists('vendor/autoload.php') ) {
-            $this->logger->info("===> Found autoload script, loading...");
+            $this->logger->info("===> Found autoload script from composer, loading...");
             $loader = require "vendor/autoload.php";
         }
-
 
         $steps = $this->getSteps();
         $this->runSteps($steps, $this->options->dryrun);
