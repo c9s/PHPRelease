@@ -78,7 +78,7 @@ class Console extends Application
 
             $taskClass = $this->findTaskClass($step);
             if ( ! $taskClass ) {
-                throw new RuntimeException("Task class for $step not found.");
+                throw new RuntimeException("Task class $taskClass for $step not found.");
             }
             $task = $this->createTaskObject($taskClass);
             $tasks[] = $task;
