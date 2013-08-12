@@ -33,6 +33,7 @@ class Console extends Application
         parent::options($opts);
         $opts->add('dryrun','dryrun mode.');
         $opts->add('skip+','skip specific step');
+        $opts->add('no-autoload','skip autoload');
 
         foreach( $this->getTaskObjects() as $task ) {
             $task->options($opts);
@@ -195,17 +196,18 @@ class Console extends Application
 
         $input = $this->ask("Are you sure to release? [Press Enter To Continue]");
 
-
-        $config = $this->getConfig();
-        if ( isset($config['Autoload']) ) {
-            if ( $a = $config['Autoload'] ) {
-                $this->logger->info("===> Found autoload script, loading $a");
-                $loader = require $a;
+        if ( ! $this->options->{'no-autoload'} ) {
+            $config = $this->getConfig();
+            if ( isset($config['Autoload']) ) {
+                if ( $a = $config['Autoload'] ) {
+                    $this->logger->info("===> Found autoload script, loading $a");
+                    $loader = require $a;
+                }
             }
-        }
-        elseif ( file_exists('vendor/autoload.php') ) {
-            $this->logger->info("===> Found autoload script from composer, loading...");
-            $loader = require "vendor/autoload.php";
+            elseif ( file_exists('vendor/autoload.php') ) {
+                $this->logger->info("===> Found autoload script from composer, loading...");
+                $loader = require "vendor/autoload.php";
+            }
         }
 
         $steps = $this->getSteps();
