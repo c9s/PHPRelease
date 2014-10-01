@@ -110,7 +110,7 @@ class BumpVersion extends BaseTask
             $this->logger->debug("Writing version info from composer.json");
             $composer = json_decode(file_get_contents("composer.json"),true);
             $composer['version'] = $newVersion;
-            return file_put_contents("composer.json", json_encode($composer,JSON_PRETTY_PRINT));
+            return file_put_contents("composer.json", json_encode($composer,JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE));
         }
     }
 
