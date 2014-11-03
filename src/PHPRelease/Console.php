@@ -4,6 +4,7 @@ use CLIFramework\Application;
 use Exception;
 use RuntimeException;
 use PHPRelease\VersionReader;
+use GetOptionKit\OptionResult;
 
 function findbin($bin)
 {
@@ -19,7 +20,7 @@ function findbin($bin)
 class Console extends Application
 {
     const NAME = "PHPRelease";
-    const VERSION = "1.1.16";
+    const VERSION = "1.1.17";
 
     public function brief()
     {
@@ -34,7 +35,6 @@ class Console extends Application
         $opts->add('dryrun','dryrun mode.');
         $opts->add('skip+','skip specific step');
         $opts->add('no-autoload','skip autoload');
-
         foreach( $this->getTaskObjects() as $task ) {
             $task->options($opts);
         }
@@ -63,7 +63,7 @@ class Console extends Application
     {
         $task = $this->createCommand($class);
         $task->setConfig($this->getConfig());
-        // $task->setOptions($this->getOptions());
+        $task->setOptions(new OptionResult);
         return $task;
     }
 
