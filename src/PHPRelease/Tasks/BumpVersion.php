@@ -95,11 +95,12 @@ class BumpVersion extends BaseTask
 
     public function getVersionFromFiles()
     {
-        if ($file = $this->config('VersionFrom')) {
-            return preg_split('#\s*,\s*#', $file);
-        } else if ($file = $this->config('BumpVersion.VersionFrom')) {
+        if ($file = $this->config('BumpVersion.VersionFrom')) {
             return preg_split('#\s*,\s*#', $file);
         }
+        if ($file = $this->config('VersionFrom')) {
+            return preg_split('#\s*,\s*#', $file);
+        } 
         return array();
     }
 
