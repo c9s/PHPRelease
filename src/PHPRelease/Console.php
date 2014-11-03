@@ -20,7 +20,7 @@ function findbin($bin)
 class Console extends Application
 {
     const NAME = "PHPRelease";
-    const VERSION = "1.1.17";
+    const VERSION = "1.2.0";
 
     public function brief()
     {
@@ -31,11 +31,14 @@ class Console extends Application
 
     public function options($opts)
     {
+        // Inherit the options from CLIFramework\Application
         parent::options($opts);
         $opts->add('dryrun','dryrun mode.');
-        $opts->add('skip+','skip specific step');
-        $opts->add('no-autoload','skip autoload');
-        foreach( $this->getTaskObjects() as $task ) {
+        $opts->add('skip+', 'Skip specific step');
+        $opts->add('no-autoload','Skip autoload');
+
+        // Inherit the options from the sub-tasks
+        foreach($this->getTaskObjects() as $task) {
             $task->options($opts);
         }
     }
@@ -63,7 +66,8 @@ class Console extends Application
     {
         $task = $this->createCommand($class);
         $task->setConfig($this->getConfig());
-        $task->setOptions(new OptionResult);
+
+        // $task->setOptions( );
         return $task;
     }
 
@@ -72,12 +76,12 @@ class Console extends Application
         $tasks = array();
         $steps = $this->getSteps();
         foreach( $steps as $step ) {
-            if ( file_exists($step)  || findbin($step) ) {
+            if (file_exists($step) || findbin($step)) {
                 continue;
             }
 
             $taskClass = $this->findTaskClass($step);
-            if ( ! $taskClass ) {
+            if (! $taskClass) {
                 throw new RuntimeException("Task class $taskClass for $step not found.");
             }
             $task = $this->createTaskObject($taskClass);
@@ -139,11 +143,12 @@ class Console extends Application
 
             $taskClass = $this->findTaskClass($step);
             if ( ! $taskClass ) {
-                $this->logger->error("===> Taks $step not found, aborting...");
+                $this->logger->error("===> Task $step not found, aborting...");
                 exit(0);
             }
 
             $task = $this->createTaskObject($taskClass);
+            $task->setOptions($this->options);
 
             $this->logger->info("===> Running $taskClass");
             if ( ! $dryrun ) {
