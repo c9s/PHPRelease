@@ -83,7 +83,7 @@ class BumpVersion extends BaseTask
         $this->logger->info("===> Version bump from $versionString to $newVersionString");
 
 
-        $versionFromFiles = $this->application->getVersionFromFiles();
+        $versionFromFiles = $this->getVersionFromFiles();
         foreach( $versionFromFiles as $file ) {
             if ( false === $this->replaceVersionFromSourceFile($file, $newVersionString) ) {
                 $this->logger->error("Version update failed: $file");
@@ -91,6 +91,41 @@ class BumpVersion extends BaseTask
         }
         $this->writeVersionToPackageINI($newVersionString);
         $this->writeVersionToComposerJson($newVersionString);
+    }
+
+    public function getVersionFromFiles()
+    {
+        if ($file = $this->config('VersionFrom')) {
+            return preg_split('#\s*,\s*#', $file);
+        } else if ($file = $this->config('BumpVersion.VersionFrom')) {
+            return preg_split('#\s*,\s*#', $file);
+        }
+        return array();
+    }
+
+    public function getCurrentVersion()
+    {
+        // XXX: Refactor to FindVersion task.
+        $reader = new VersionReader;
+        $versionFromFiles = $this->getVersionFromFiles();
+        if (! empty($versionFromFiles)) {
+            if ( $versionString = $reader->readFromSourceFiles($versionFromFiles) ) {
+                $this->logger->debug("Found version from source files.");
+                return $versionString;
+            }
+        }
+
+        if ( $versionString = $reader->readFromComposerJson() ) {
+            $this->logger->debug("Found version from composer.json");
+            return $versionString;
+        }
+
+        if ( $versionString = $reader->readFromPackageINI() ) {
+            $this->logger->debug("Found version from package.ini");
+            return $versionString;
+        }
+        $this->logger->error("Version string not found, aborting...");
+        return false;
     }
 
     public function writeVersionToPackageINI($newVersion)
@@ -131,7 +166,6 @@ class BumpVersion extends BaseTask
     {
         $versionInfo['patch'] = (@$versionInfo['patch'] ?: 0) + 1;
     }
-
 
     public function createVersionString($info)
     {

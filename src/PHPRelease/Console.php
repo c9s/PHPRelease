@@ -23,7 +23,7 @@ class Console extends Application
 
     public function brief()
     {
-        return "PHPRelease - The Fast PHP Release Manager.";
+        return "PHPRelease - PHP Release Manager.";
     }
 
     public $config = array();
