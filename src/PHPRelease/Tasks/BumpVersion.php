@@ -34,7 +34,7 @@ class BumpVersion extends BaseTask
 
     public function execute()
     {
-        $versionString = $this->application->getCurrentVersion();
+        $versionString = $this->getCurrentVersion();
         $versionParser = new VersionParser;
         $versionInfo = $versionParser->parseVersionString($versionString);
 

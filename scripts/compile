@@ -4,6 +4,8 @@ onion compile \
     --lib src \
     --lib vendor/corneltek/cliframework/src \
     --lib vendor/corneltek/getoptionkit/src \
+    --lib vendor/corneltek/configkit/src \
+    --lib vendor/corneltek/class-template/src \
     --lib vendor/corneltek/universal/src \
     --classloader \
     --bootstrap scripts/phprelease.php \

@@ -19,7 +19,7 @@ function findbin($bin)
 class Console extends Application
 {
     const NAME = "PHPRelease";
-    const VERSION = "1.1.14";
+    const VERSION = "1.1.16";
 
     public function brief()
     {
@@ -43,7 +43,7 @@ class Console extends Application
     public function init()
     {
         parent::init();
-        $this->registerCommand('init');
+        $this->addCommand('init');
     }
 
     public function findTaskClass($step)
@@ -63,7 +63,7 @@ class Console extends Application
     {
         $task = $this->createCommand($class);
         $task->setConfig($this->getConfig());
-        $task->setOptions($this->options);
+        // $task->setOptions($this->getOptions());
         return $task;
     }
 

@@ -8,7 +8,7 @@ class GitTag extends BaseTask
     public function execute()
     {
         // TODO: generate changelog diff from Changelog file
-        $version = $this->application->getCurrentVersion();
+        $version = $this->getApplication()->getCurrentVersion();
         $this->logger->info("Tagging $version...");
         $lastline = system("git tag $version", $retval);
         return $retval == 0;
