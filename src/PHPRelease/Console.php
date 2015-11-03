@@ -199,7 +199,12 @@ class Console extends Application
             throw new RuntimeException("phprelease.ini not found, please run `phprelease init` command to get one.");
         }
 
-        $input = $this->ask("Are you sure to release? [Press Enter To Continue]");
+        if ( ! $this->options->{'no-interact'}) {
+            $input = $this->ask("Are you sure you want to release? [Y/n]");
+            if ( ! in_array($input, array('Y', 'y', ''))) {
+                return;
+            }
+        }
 
         if ( ! $this->options->{'no-autoload'} ) {
             $config = $this->getConfig();
@@ -219,4 +224,3 @@ class Console extends Application
         $this->runSteps($steps, $this->options->dryrun);
     }
 }
-
