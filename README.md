@@ -16,7 +16,7 @@ Install
 -------
 
 ```sh
-$ curl -O https://raw.github.com/c9s/PHPRelease/master/phprelease
+$ curl -OLSs https://raw.github.com/c9s/PHPRelease/master/phprelease
 $ chmod +x phprelease
 $ mv phprelease /usr/bin
 ```
@@ -86,6 +86,18 @@ To bump minor version and set the stability suffix:
     $ phprelease --bump-minor --stable
     ===> Bumping version from 2.2.3 => 2.3.0
 
+To use a version prefix for the git tag, add this key to your phprelease.ini:
+
+```ini
+GitTagPrefix = v.
+```
+
+This will result in something like:
+
+    $ phprelease
+    ===> Version bump from 2.2.3 to 2.3.0
+    ===> Running PHPRelease\Tasks\GitTag
+    ===> Tagging as v.1.2.2
 
 Configuring GitAdd Task
 ------------------------
@@ -108,7 +120,7 @@ $ phprelease --skip BumpVersion
 Getting Version From PHP Source File
 -------------------------------------
 
-If you defined your version string in your PHP source file or class const, 
+If you defined your version string in your PHP source file or class const,
 to bump version from php source file, you can simply define a `VersionFrom` option:
 
 
@@ -183,5 +195,3 @@ Hacking
     composer install --dev
 
 3. Hack!
-
-
