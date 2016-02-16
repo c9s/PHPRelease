@@ -1,6 +1,6 @@
 PHPRelease
 ==========
-[![Build Status](https://travis-ci.org/c9s/PHPRelease.png?branch=master)](https://travis-ci.org/c9s/PHPRelease)
+[![Build Status](https://travis-ci.org/c9s/PHPRelease.svg?branch=master)](https://travis-ci.org/c9s/PHPRelease)
 
 The simplest way to define your release process.
 
