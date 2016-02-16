@@ -1,6 +1,7 @@
 {
     "name": "corneltek/phprelease",
     "version": "1.3.0",
+    "license": "MIT",
     "require": {
         "corneltek/cliframework": "^2",
         "corneltek/configkit": "*",
