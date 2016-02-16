@@ -6,7 +6,9 @@
         "corneltek/configkit": "*",
         "corneltek/curlkit": "^1.0"
     },
-    "bin": ["bin/phprelease"],
+    "bin": [
+        "bin/phprelease"
+    ],
     "require-dev": {
         "corneltek/phpunit-testmore": "dev-master"
     },
