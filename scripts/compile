@@ -1,16 +1,5 @@
 #!/bin/bash
 set -e
-onion compile \
-    --lib src \
-    --lib vendor/corneltek/cliframework/src \
-    --lib vendor/corneltek/getoptionkit/src \
-    --lib vendor/corneltek/configkit/src \
-    --lib vendor/corneltek/class-template/src \
-    --lib vendor/corneltek/universal/src \
-    --lib vendor/pimple/pimple/src \
-    --classloader \
-    --bootstrap scripts/phprelease.php \
-    --executable \
-    --output phprelease.phar
-mv phprelease.phar phprelease
+php bin/phprelease --debug archive --app-bootstrap --executable --no-compress
+mv -v output.phar phprelease
 chmod +x phprelease
