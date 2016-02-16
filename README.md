@@ -1,5 +1,6 @@
 PHPRelease
 ==========
+[![Latest Stable Version](https://poser.pugx.org/corneltek/phprelease/v/stable)](https://packagist.org/packages/corneltek/phprelease) [![Total Downloads](https://poser.pugx.org/corneltek/phprelease/downloads)](https://packagist.org/packages/corneltek/phprelease) [![Latest Unstable Version](https://poser.pugx.org/corneltek/phprelease/v/unstable)](https://packagist.org/packages/corneltek/phprelease) [![License](https://poser.pugx.org/corneltek/phprelease/license)](https://packagist.org/packages/corneltek/phprelease)
 [![Build Status](https://travis-ci.org/c9s/PHPRelease.svg?branch=master)](https://travis-ci.org/c9s/PHPRelease)
 
 The simplest way to define your release process.
