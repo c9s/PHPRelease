@@ -21,6 +21,12 @@ $ chmod +x phprelease
 $ mv phprelease /usr/bin
 ```
 
+### Including phprelease in your project
+
+Simplfy run composer require to include the package:
+
+    composer require --dev corneltek/phprelease
+
 Usage
 -----
 
