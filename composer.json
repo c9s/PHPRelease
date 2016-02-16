@@ -3,7 +3,8 @@
     "version": "1.3.0",
     "require": {
         "corneltek/cliframework": "^2",
-        "corneltek/configkit": "*"
+        "corneltek/configkit": "*",
+        "corneltek/curlkit": "^1.0"
     },
     "bin": ["bin/phprelease"],
     "require-dev": {
