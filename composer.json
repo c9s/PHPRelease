@@ -11,8 +11,8 @@
         "corneltek/phpunit-testmore": "dev-master"
     },
     "autoload": {
-        "psr-0": {
-            "PHPRelease": "src"
+        "psr-4": {
+            "PHPRelease\\": "src/PHPRelease/"
         }
     }
 }
