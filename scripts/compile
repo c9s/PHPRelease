@@ -1,5 +1,5 @@
 #!/bin/bash
 set -e
-php bin/phprelease --debug archive --app-bootstrap --executable --no-compress
+php bin/phprelease --debug archive --app-bootstrap --executable --no-compress --exclude tests
 mv -v output.phar phprelease
 chmod +x phprelease
